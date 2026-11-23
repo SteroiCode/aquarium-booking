@@ -1,2 +1,11 @@
 *
 !.gitignore
+!aquariums/
+!aquariums/*.jpg
+!aquariums/*.png
+!fish_species/
+!fish_species/*.jpg
+!fish_species/*.png
+!coral_plants/
+!coral_plants/*.jpg
+!coral_plants/*.png
