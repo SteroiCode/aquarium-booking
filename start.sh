@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "==> Clearing all caches..."
+echo "==> Clearing ALL caches..."
 php artisan config:clear || true
 php artisan cache:clear || true
 php artisan route:clear || true
