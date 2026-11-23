@@ -26,7 +26,7 @@ class BookingController extends Controller
             'customer_email' => 'required|email',
             'visit_date'     => 'required|date',
             'tickets'        => 'required|integer|min:1',
-            'payment_proof'  => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'payment_proof'  => 'required|image|mimes:jpeg,png,jpg|max:20480',
         ]);
 
         $aquarium = Aquarium::findOrFail($request->aquarium_id);
