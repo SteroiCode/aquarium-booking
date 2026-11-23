@@ -18,9 +18,9 @@ class SampleDataSeeder extends Seeder
 
         // ── Aquariums ─────────────────────────────────────────────
         DB::table('aquariums')->insert([
-            ['name' => 'Ocean Deep Tank',    'location' => 'Hall A - Ground Floor', 'description' => 'A breathtaking 50,000-litre deep-sea exhibit featuring sharks, rays, and exotic tropical fish.',  'price' => 25.00, 'image' => 'aquariums/aquarium1.jpg', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Coral Reef Paradise', 'location' => 'Hall B - Ground Floor', 'description' => 'A vibrant 20,000-litre reef aquarium bursting with colourful corals, clownfish, and blue tangs.', 'price' => 20.00, 'image' => 'aquariums/aquarium2.jpg', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Freshwater Amazon',  'location' => 'Hall C - First Floor',  'description' => 'Journey through the Amazon River basin showcasing angelfish, discus, and exotic aquatic plants.',  'price' => 18.00, 'image' => 'aquariums/aquarium3.jpg', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Ocean Deep Tank',    'location' => 'Hall A - Ground Floor', 'description' => 'A breathtaking 50,000-litre deep-sea exhibit featuring sharks, rays, and exotic tropical fish.',  'price' => 1.00, 'image' => 'aquariums/aquarium1.jpg', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Coral Reef Paradise', 'location' => 'Hall B - Ground Floor', 'description' => 'A vibrant 20,000-litre reef aquarium bursting with colourful corals, clownfish, and blue tangs.', 'price' => 1.00, 'image' => 'aquariums/aquarium2.jpg', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Freshwater Amazon',  'location' => 'Hall C - First Floor',  'description' => 'Journey through the Amazon River basin showcasing angelfish, discus, and exotic aquatic plants.',  'price' => 1.00, 'image' => 'aquariums/aquarium3.jpg', 'created_at' => now(), 'updated_at' => now()],
         ]);
 
         // ── Fish Species ──────────────────────────────────────────
