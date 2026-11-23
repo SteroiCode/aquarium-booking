@@ -46,15 +46,25 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
+set -e\n\
+echo "==> Clearing caches..."\n\
 php artisan config:clear\n\
 php artisan cache:clear\n\
+echo "==> Running migrations..."\n\
 php artisan migrate --force\n\
+echo "==> Seeding admin user..."\n\
 php artisan db:seed --class=AdminUserSeeder --force 2>/dev/null || true\n\
+echo "==> Storage link..."\n\
 php artisan storage:link 2>/dev/null || true\n\
+echo "==> Fix storage permissions..."\n\
+chmod -R 777 /var/www/html/storage\n\
+chmod -R 777 /var/www/html/bootstrap/cache\n\
+echo "==> Caching config/routes/views..."\n\
 php artisan config:cache\n\
 php artisan route:cache\n\
 php artisan view:cache\n\
 php artisan event:cache\n\
+echo "==> Starting Apache..."\n\
 apache2-foreground' > /start.sh && chmod +x /start.sh
 
 EXPOSE 80
