@@ -20,7 +20,8 @@ chmod -R 777 /var/www/html/bootstrap/cache || true
 echo "==> Caching for performance..."
 php artisan config:cache || true
 php artisan route:cache || true
-php artisan view:cache || true
+# Don't cache views — causes issues with dynamic content
+# php artisan view:cache || true
 
 echo "==> Starting Apache..."
 apache2-foreground
