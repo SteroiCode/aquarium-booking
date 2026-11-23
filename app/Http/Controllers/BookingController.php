@@ -53,6 +53,11 @@ class BookingController extends Controller
             'paid_at'        => now(),
         ]);
 
+        // Send Telegram notification to admin
+        try {
+            (new \App\Services\TelegramService())->newBooking($booking->load('aquarium'));
+        } catch (\Exception $e) {}
+
         return redirect()->route('booking.pending', $booking->id)
             ->with('success', 'Booking submitted! Your payment is being verified by admin.');
     }

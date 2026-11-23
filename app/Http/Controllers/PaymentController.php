@@ -55,16 +55,26 @@ class PaymentController extends Controller
 
     public function verifyPayment($bookingId)
     {
-        $booking = Booking::findOrFail($bookingId);
+        $booking = Booking::with('aquarium')->findOrFail($bookingId);
         $booking->update(['payment_status' => 'verified', 'status' => 'Confirmed']);
+
+        // Telegram notification
+        try {
+            (new \App\Services\TelegramService())->bookingConfirmed($booking);
+        } catch (\Exception $e) {}
 
         return redirect()->back()->with('success', 'Payment verified and booking confirmed!');
     }
 
     public function rejectPayment(Request $request, $bookingId)
     {
-        $booking = Booking::findOrFail($bookingId);
+        $booking = Booking::with('aquarium')->findOrFail($bookingId);
         $booking->update(['payment_status' => 'rejected', 'status' => 'Cancelled']);
+
+        // Telegram notification
+        try {
+            (new \App\Services\TelegramService())->bookingCancelled($booking);
+        } catch (\Exception $e) {}
 
         return redirect()->back()->with('success', 'Payment rejected.');
     }
