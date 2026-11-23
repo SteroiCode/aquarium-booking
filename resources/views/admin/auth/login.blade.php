@@ -169,21 +169,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Debug: Check if CSRF token exists
-    document.addEventListener('DOMContentLoaded', function() {
-        const csrfToken = document.querySelector('input[name="_token"]');
-        if (!csrfToken) {
-            console.error('CSRF token not found!');
-        } else {
-            console.log('CSRF token found:', csrfToken.value.substring(0, 10) + '...');
-        }
+    // Clear notification localStorage on login page load (fresh start)
+    localStorage.removeItem('lastBookingId');
+    localStorage.removeItem('unreadCount');
+    localStorage.removeItem('notifDbVersion');
 
-        // Add form submit handler for debugging
+    document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('adminLoginForm');
         form.addEventListener('submit', function(e) {
-            console.log('Form submitting...');
-            console.log('Action:', form.action);
-            console.log('Method:', form.method);
+            // Clear again on submit to ensure fresh state after login
+            localStorage.removeItem('lastBookingId');
+            localStorage.removeItem('unreadCount');
+            localStorage.removeItem('notifDbVersion');
         });
     });
 </script>
