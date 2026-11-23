@@ -339,8 +339,18 @@
         });
 
         // ── Booking notification polling ──
+        // Clear stale localStorage if DB was reseeded (version check)
+        const NOTIF_VERSION = '{{ \App\Models\Booking::max("id") ?? 0 }}';
+        const storedVersion = localStorage.getItem('notifDbVersion');
+        if (storedVersion !== NOTIF_VERSION && NOTIF_VERSION === '0') {
+            // DB was wiped/reseeded - reset state
+            localStorage.removeItem('lastBookingId');
+            localStorage.removeItem('unreadCount');
+        }
+        localStorage.setItem('notifDbVersion', NOTIF_VERSION);
+
         let lastBookingId = parseInt(localStorage.getItem('lastBookingId') || '0');
-        let unreadCount = parseInt(localStorage.getItem('unreadCount') || '0');
+        let unreadCount   = parseInt(localStorage.getItem('unreadCount')   || '0');
         let toastTimer = null;
 
         function updateBadge() {
@@ -394,12 +404,14 @@
         async function checkNewBookings() {
             try {
                 const res = await fetch('/admin/notifications/latest-booking');
+                if (!res.ok || res.headers.get('content-type')?.indexOf('application/json') === -1) return;
                 const data = await res.json();
                 if (data.latest_id > lastBookingId && lastBookingId !== 0) {
                     unreadCount++;
                     localStorage.setItem('unreadCount', unreadCount);
                     updateBadge();
-                    const msg = `${data.customer_name} booked ${data.tickets} ticket(s) for ${data.aquarium}.`;
+                    const aquarium = data.aquarium || 'an aquarium';
+                    const msg = `${data.customer_name} booked ${data.tickets} ticket(s) for ${aquarium}.`;
                     showToast(msg);
                     playNotifSound();
                 }
@@ -410,11 +422,11 @@
             } catch (e) {}
         }
 
-        // Init on first load (don't alert for existing bookings)
+        // Init — seed lastBookingId from server so we don't alert for existing bookings
         fetch('/admin/notifications/latest-booking')
-            .then(r => r.json())
+            .then(r => r.ok ? r.json() : null)
             .then(data => {
-                if (lastBookingId === 0 && data.latest_id > 0) {
+                if (data && lastBookingId === 0 && data.latest_id > 0) {
                     lastBookingId = data.latest_id;
                     localStorage.setItem('lastBookingId', lastBookingId);
                 }
