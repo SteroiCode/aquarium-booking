@@ -49,6 +49,12 @@ RUN { \
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Remove any cached config that may have baked-in env vars
+RUN rm -f /var/www/html/bootstrap/cache/config.php \
+    && rm -f /var/www/html/bootstrap/cache/routes*.php \
+    && rm -f /var/www/html/bootstrap/cache/events.php \
+    && rm -f /var/www/html/bootstrap/cache/services.php
+
 # Copy and prepare startup script
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
