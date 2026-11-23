@@ -105,18 +105,12 @@
             <div style="background:rgba(30,41,59,0.9); border:1px solid rgba(14,165,233,0.3); border-radius:20px; padding:32px; text-align:center; position:sticky; top:90px;">
 
                 <div style="font-size:13px;color:#cbd5e1;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Pay to</div>
-                <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:20px;">{{ $khqrData['merchant_name'] }}</div>
+                <div style="font-size:17px;font-weight:700;color:#fff;margin-bottom:20px;">NEANG ROTHANA (ABA Bank)</div>
 
-                {{-- QR Image --}}
+                {{-- QR Image - Static ABA PAY QR --}}
                 <div style="display:inline-block;background:#fff;padding:12px;border-radius:16px;margin-bottom:20px;">
-                    <img id="qrImage" src="" alt="KHQR"
-                         style="width:220px;height:220px;display:none;">
-                    <div id="qrLoading" style="width:220px;height:220px;display:flex;align-items:center;justify-content:center;color:#cbd5e1;font-size:13px;">
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;margin-bottom:8px;">⏳</div>
-                            Enter tickets to generate QR
-                        </div>
-                    </div>
+                    <img src="{{ asset('images/qr.jpg') }}" alt="ABA PAY QR"
+                         style="width:220px;height:220px;object-fit:contain;display:block;">
                 </div>
 
                 {{-- Amount display --}}
